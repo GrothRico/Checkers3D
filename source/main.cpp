@@ -278,11 +278,58 @@ GLFWwindow *init(bool wireframe_mode) {
   return window;
 }
 
+namespace RGBColor {
+struct color {
+  float r;
+  float g;
+  float b;
+  float a;
+};
+constexpr color Black{0.0f, 0.0f, 0.0f, 0.0f};
+} // namespace RGBColor
+
 int main() {
   GLFWwindow *window{init(false)};
+  float boardVertices[] = {
+      -0.5f, -0.5f, 0.0f, // down left
+      -0.5f, 0.5f,  0.0f, // up left
+      0.5f,  0.5f,  0.0f, // up right
+      0.5f,  -0.5f, 0.0f, // down right
+      -0.5f, -0.5f, 0.2f, // 4
+      -0.5f, 0.5f,  0.2f, // 5
+      0.5f,  0.5f,  0.2f, // 6
+      0.5f,  -0.5f, 0.2f, // 7
+  };
+  uint32_t indeces[] = {
+      0, 1, 2, 0, 2, 3, // front
+      4, 5, 6, 4, 5, 7, // back
+      1, 5, 6, 1, 6, 7, // top
+      0, 4, 7, 0, 7, 3, // bottom
+      0, 1, 4, 1, 5, 4, // left
+      3, 2, 7, 2, 6, 7, // right
+  };
+
+  uint32_t vertexBuffer{};
+  uint32_t indexBuffer{};
+  uint32_t vertexArray{};
+  glCreateVertexArrays(1, &vertexArray);
+  glBindVertexArray(vertexArray);
+  glCreateBuffers(1, &vertexBuffer);
+  glCreateBuffers(1, &indexBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(boardVertices), (void *)boardVertices,
+               GL_STATIC_DRAW);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces), (void *)indeces,
+               GL_STATIC_DRAW);
+  glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), nullptr);
+
   while (!glfwWindowShouldClose(window)) {
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(RGBColor::Black.r, RGBColor::Black.g, RGBColor::Black.b,
+                 RGBColor::Black.a);
     glClear(GL_COLOR_BUFFER_BIT);
+    glBindVertexArray(vertexArray);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
       glfwSetWindowShouldClose(window, true);
     }
