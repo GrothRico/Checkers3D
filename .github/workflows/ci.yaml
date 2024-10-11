@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  push:
+      branches: [ main ]
+  pull_request:
+      branches: [ main ]
+
+jobs:
+  "setup and build":
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - run: make setup-project
+      - run: make compile
