@@ -3,7 +3,6 @@
     "dependencies": [
         "glfw3",
         "glew",
-        "stb",
-        "glm"
+        "stb"
     ]
 }

@@ -12,8 +12,8 @@
 
 #include "assets.hpp"
 #include "debug/opengl_debug.hpp"
-#include "shader/shader.hpp"
 
+/*
 constexpr int WINDOW_HEIGHT{800};
 constexpr int WINDOW_WIDTH{800};
 
@@ -275,11 +275,14 @@ GLFWwindow *init(bool wireframe_mode) {
   }
   return window;
 }
+*/
 
 int main() {
+  /*
   GLFWwindow *window{init(false)};
   Examples::event_loop_triangle_with_brickwall_texture(window);
 
   teardown();
+  */
   return EXIT_SUCCESS;
 }

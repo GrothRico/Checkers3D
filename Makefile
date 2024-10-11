@@ -1,5 +1,5 @@
 PACKAGES:=xorg-dev libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config libxmu-dev libxi-dev libgl-dev
-EXEC_NAME:=Game
+EXEC_NAME:=Checkers3D
 
 default: run
 
@@ -13,7 +13,7 @@ run: compile ## Run the game
 compile: create-build-files ## Compile the game
 	$(MAKE) -C ./build/
 
-create-build-files: ## Generate necessary build files using CMake
+create-build-files: ## Generate build files using CMake
 	rm -f compile_commands.json
 	cmake -S ./ -B ./build/ && ln -s build/compile_commands.json compile_commands.json
 
