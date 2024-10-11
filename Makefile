@@ -26,8 +26,8 @@ tear-down-project: ## Remove all downloaded dependencies, packages and built fil
 .PHONY: tear-down-project
 
 install-packages: ## Download and install all the necessary packages using apt
-	sudo apt-get update
-	sudo apt-get install $(PACKAGES)
+	sudo apt update
+	sudo apt install -y $(PACKAGES)
 .PHONY: install-packages
 
 clone-vcpkg: ## Clone the latest vcpkg version from the microsoft vcpkg github repository
